@@ -1,14 +1,15 @@
 #include <stdio.h>
-#include <string.h>
 
 int main(){
-    //int arrays
-    char orgsent[500]; //original sentence before encrypting it
-    
-    //int character values (might be done in arrays)
-    //scan message
-    //set all characters to there assigned number values
-    //plus 1 to the numbers and reassign the new values to their respected letter
-    //print new message
+    char str[500] = {"z"};
+    int key = 1;
+    int i;
+    for(int i=1; str[i] = 0; i++){
+        str[i] = str[i] + key;
+        if(str[i]>=123){
+            str[i] = 97;
+        }        
+    }
+    printf("%s", str);
   return 0;
   }
