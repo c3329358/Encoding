@@ -1,61 +1,72 @@
+/********************************************************************************************************
+This code block is able to encrypt and decrypt a message using a known key
+The code uses a Rotation Cipher (Ceasar) and a Substitution Cipher
+The input can be both upper and lower case with the output being only in upper case letters
+punctuation does not get encrypted, only letters, with numerical values remaining the same.
+********************************************************************************************************/
+
+
+/************************************HOW TO RUN*******************************
+To run use the terminal and run cd /projects/Encoding ----> ./a.out
+Then first enter the message you either want to encrypt or decrypt. When finished hit enter.
+Then enter what operation you would like to do (1-4) with the numbers correlating to the operations shown in the termail.
+When u enter a number hit enter and it will proceed to either encrypt or decrypt with the message being printed in the terminal.
+******************************************************************************/
 #include <stdio.h>
 int main(){
-    int op, x = 1;          //the x variable is just something i put in the default line of code for the case switch statements
-    int i, key = 1;         //key is known
+    int op, x = 1;                                      //the x variable is just something i put in the default line of code for the case switch statements
+    int i, key = 1;                                     //key is known for Rotation Cipher
     char str[1024];
-    printf("Enter message: ");
-    scanf("%[^\n]s", str);
+    printf("Enter message: ");                          
+    scanf("%[^\n]s", &str);                             //scans message and gives it to the string (str) variable
     printf("Enter operation you would like to execute\n1 = Rotation Cipher Encrypt      2 = Rotation Cipher Decrypt\n3 = Substitution Cipher Encrypt        4 = Substitution Cipher Decrypt \n");
-    scanf("%d", &op);
+    scanf("%d", &op);                                   //scans the entered operation number and gives it to the op variable
     switch(op){
         
 /*************************************** ROTATION CIPHER ENCRYPT ********************************************/        
         case 1:
-        for(i = 0; str[i] != '\0'; i++){
+        for(i = 0; str[i] != '\0'; i++){                //if the string character fits for the condition 97 <= str[i] <= 122
             if(str[i]<=122){                            //changes lowercase letters to upercase                 
                 if(str[i] >= 97){
-                    str[i] = str[i] - 32;
+                    str[i] = str[i] - 32;               //minuses the difference to make it uppercase
                 }
             }
-            if(str[i] <= 90){
+            if(str[i] <= 90){                           //this set of if statements makes it so that it only encrypts letters and keeps numerical values and punctuation the same
                 if(str[i] >= 65){                       
-                    str[i] = str[i] + key;
-                    if(str[i] ==33){                    //dealing with white spaces
-                        str[i] = 32;
-                    }
+                    str[i] = str[i] + key;          
                     if(str[i] == 91){                   //Capital Z to A
                         str[i] = 65;
                     }
                 }
             }                                       
         }                                               //end of encryption loop
-        printf("%s\n", str);                            //prints the encrypted message
+        printf("%s", str);                              //prints the encrypted message
         break;
 
 /***************************************** ROTATION CIPHER DECRYPT ******************************************/
         case 2:
-        for(i = 0; str[i] != '\0'; i++){
-            if(str[i]>= 97){                    //changes lower case letter to upper case
-                if(str[i]<= 122){               
-                    str[i] = str[i] - 32;    
+        for(i = 0; str[i] != '\0'; i++){                
+            if(str[i]>= 97){                            //if the string character fits for the condition 97 <= str[i] <= 122
+                if(str[i]<= 122){                       //changes lower case letter to upper case
+                    str[i] = str[i] - 32;               //minuses the difference to make it uppercase
                 }  
             }
             if(str[i] >= 65){                       
-                str[i] = str[i] - key;
-                if(str[i] ==31){                    //dealing with white spaces
-                    str[i] = 32;
+                str[i] = str[i] - key;                  //minuses the scaned ascii code with the key                  
+                if(str[i] ==31){                        //dealing with white spaces
+                    str[i] = 32;                        //sets white spaces to themselves
                 }
-                if(str[i] == 64){                   //Capital Z to A
+                if(str[i] == 64){                       //Capital Z to A
                     str[i] = 91;
                 }
             }
-        }                                           //end of decrpytion
-        printf("%s\n", str);                        //prints full decrypted message
+        }                                               //end of decrpytion
+        printf("%s", str);                              //prints full decrypted message
         break;
 /****************************************** SUBSTITUTION CIPHER ENCRYPT **************************************/
         case 3:
         for(i=0; str[i]!='\0';i++){
-            if(str[i] >= 97){                       //turns lower case letters into upper case
+            if(str[i] >= 97){                           //turns lower case letters into upper case
                 if(str[i] <=122){
                     str[i] = str[i] - 32;
                 }
@@ -113,10 +124,10 @@ int main(){
                 break;
                 case 'Z':str[i] =80;
                 break;
-                default: x++;
+                default: x++;                   //not necassary, just fills the default line with a command and doesnt change anything with the string
             }                                   //end of switch statement
         }                                       //end of encryption     
-        printf("%s\n", str);                      //prints encrypted message
+        printf("%s", str);                      //prints encrypted message
         break;
         
 /************************************************** SUBSTITUTION CIPHER DECRYPT ******************************/
@@ -180,10 +191,10 @@ int main(){
                 break;
                 case 80:str[i] ='Z';
                 break;
-                default: x++;
+                default: x++;                       //not necassary, just fills the default line with a command and doesnt change anything with the string
             }
         }
-        printf("%s\n", str);
+        printf("%s", str);
         break;
     }
 }
